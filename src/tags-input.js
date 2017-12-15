@@ -30,6 +30,7 @@ export default function tagsInput(input) {
 			    array.splice(index, 1);
 				}
 				input.value = array.join(',');
+				input.dispatchEvent(new Event('change'));
 			});
 		}
 		for (let key in attributes) {
