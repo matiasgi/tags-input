@@ -15,9 +15,27 @@ export default function tagsInput(input) {
 		let el = document.createElement(type);
 		if (name) el.className = name;
 		if (text) el.textContent = text;
+		if (name === 'tag') {
+			let closeEl = document.createElement('span');
+			closeEl.classList.add('close');
+			el.appendChild(closeEl);
+
+			el.querySelector('.close').addEventListener('click', () => {
+				let tags = el.parentElement,
+						tagText = el.getAttribute('data-tag'),
+						array = input.value.split(','),
+						index = array.indexOf(tagText);
+				tags.removeChild(el);
+				if (index !== -1) {
+			    array.splice(index, 1);
+				}
+				input.value = array.join(',');
+			});
+		}
 		for (let key in attributes) {
 			el.setAttribute(`data-${key}`, attributes[key]);
 		}
+
 		return el;
 	}
 
@@ -231,3 +249,4 @@ export default function tagsInput(input) {
 
 // make life easier:
 tagsInput.enhance = tagsInput.tagsInput = tagsInput;
+
